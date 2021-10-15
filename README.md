@@ -3,3 +3,5 @@
 A person can have heart disease and not feel sick. Some people with heart disease have symptoms. This is when there are changes or pain in the body to show a disease is there. Some symptoms of heart disease are.
 1. Pain in the chest
 2. 
+### plots
+![correlation plot](https://github.com/anurag6787/heart-disease-by-logistic/blob/main/images/plot_correlation_?raw=true)
