@@ -13,8 +13,32 @@ author<- "Anurag Yadav"
 #A person can have heart disease and not feel sick. Some people with heart
 #disease have symptoms. This is when there are changes or pain in the body 
 #to show a disease is there. Some symptoms of heart disease are:
-df1<-read.csv('heart.csv')
+#**Sex** : 1 = Male , 0 = Female
 
+#**cp** : Chest pain type (0 - 3)
+
+#**trestbps** : Resting blood pressure (in mm Hg on admission to the hospital)
+
+#**chol** : Serum cholesterol in mg/dl
+
+#**fbs** : Fasting blood sugar > 120 mg/dl (1 = true , 0 = false)
+
+#**restecg** : Resting electrocardiographic results (0-2)
+
+#**exang**  : Exercise induced angina (1 = yes , 0 = no)
+
+#**oldpeak**  : ST depression induced by exercise relative to rest
+
+#**slope**  : The slope of the peak exercise ST segment (0-2)
+
+## libraries used 
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(caTools)
+library(DataExplorer)
+library(caret)
+library(pROC)
 ## loading data
 df<-read.csv('heart.csv')
 head(df)
@@ -47,7 +71,7 @@ boxplot(FastingBS~HeartDisease,df)
 boxplot(Age~HeartDisease,df)
 boxplot(Oldpeak~HeartDisease,df)
 boxplot(HeartDisease~factor(ChestPainType),df)
-barplot(df$HeartDisease,names.arg=df$ChestPainType)
+
 ## barplot for categorical variables
 library(ggplot2)
 ggplot(df,aes(Sex,HeartDisease))+ geom_bar(stat = 'identity',aes(fill=HeartDisease))
@@ -67,9 +91,9 @@ xtabs(~HeartDisease+Sex,df)
 ## since Sex is associated with heart disease so it is not advisable to remove females 
 xtabs(~HeartDisease+ChestPainType,df)
 ## correlation plot
-plot_correlation(df[,c(1,4,5,6,8,10)])
 library(DataExplorer)
 install.packages("DataExplorer")
+plot_correlation(df[,c(1,4,5,6,8,10)])
 
 ##  fit logistic regression
 
@@ -81,10 +105,15 @@ Predprob <- predict(mymod,test, type="response")
 Predprob
 install.packages("caret")
 library(caret)
-## confudion  matrix
-table(test$HeartDisease,pred_test)
-## ACCURACY
-rightprection
-
+## confusion  matrix
 pred_test <- ifelse( Predprob  >  0.5 , 1 , 0)
-## 
+confmat<-table(test$HeartDisease,pred_test)
+
+## ACCURACY
+##right prediction/total prediction
+## by confusion matrix
+total_right_prediction= 99+135
+total_wrong_prediction=17+24
+accuracy=total_right_prediction/(total_right_prediction+total_wrong_prediction)
+accuracy
+
